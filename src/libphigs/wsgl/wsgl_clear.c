@@ -44,9 +44,9 @@ static void priv_clear_area3(
   int n_vertices = 0;
   int normal_indices[MAX_VERTICES];
   int n_normals = 0;
-  glBegin(GL_POLYGON);
+  wsgl_begin_emu(GL_POLYGON);
   for (i = 0; i < point_list->num_points; i++) {
-    glVertex3f(point_list->points[i].x,
+    wsgl_vertex3f_emu(point_list->points[i].x,
                point_list->points[i].y,
                point_list->points[i].z);
     if (record_geom){
@@ -63,7 +63,7 @@ static void priv_clear_area3(
   if (record_geom){
     wsgl_add_geometry(GEOM_FACE, vertex_indices, normal_indices, n_vertices);
   }
-  glEnd();
+  wsgl_end_emu();
 }
 
 /*******************************************************************************

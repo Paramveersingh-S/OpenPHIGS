@@ -49,13 +49,13 @@ static void priv_edges_points(
    int n_vertices = 0;
 
    if (eflag == PEDGE_VISIBILITY) {
-      glBegin(GL_LINES);
+      wsgl_begin_emu(GL_LINES);
       for (i = 0; i < edata->num_edges - 1; i++) {
          if (edata->edgedata.edges[i] == PEDGE_ON) {
-            glVertex3f(points[i].x,
+            wsgl_vertex3f_emu(points[i].x,
                        points[i].y,
                        points[i].z);
-            glVertex3f(points[i + 1].x,
+            wsgl_vertex3f_emu(points[i + 1].x,
                        points[i + 1].y,
                        points[i + 1].z);
             if (record_geom){
@@ -72,10 +72,10 @@ static void priv_edges_points(
       }
       if (edata->num_edges < num_vertices) {
          if (edata->edgedata.edges[i] == PEDGE_ON) {
-            glVertex3f(points[i].x,
+            wsgl_vertex3f_emu(points[i].x,
                        points[i].y,
                        points[i].z);
-            glVertex3f(points[i + 1].x,
+            wsgl_vertex3f_emu(points[i + 1].x,
                        points[i + 1].y,
                        points[i + 1].z);
             if (record_geom){
@@ -92,10 +92,10 @@ static void priv_edges_points(
       }
       else {
          if (edata->edgedata.edges[i] == PEDGE_ON) {
-            glVertex3f(points[i].x,
+            wsgl_vertex3f_emu(points[i].x,
                        points[i].y,
                        points[i].z);
-            glVertex3f(points[0].x,
+            wsgl_vertex3f_emu(points[0].x,
                        points[0].y,
                        points[0].z);
          }
@@ -113,12 +113,12 @@ static void priv_edges_points(
       if (record_geom){
         wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
       }
-      glEnd();
+      wsgl_end_emu();
    }
    else {
-      glBegin(GL_LINE_LOOP);
+      wsgl_begin_emu(GL_LINE_LOOP);
       for (i = 0; i < num_vertices; i++) {
-         glVertex3f(points[i].x,
+         wsgl_vertex3f_emu(points[i].x,
                     points[i].y,
                     points[i].z);
          if (record_geom){
@@ -131,7 +131,7 @@ static void priv_edges_points(
       if (record_geom){
         wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
       }
-      glEnd();
+      wsgl_end_emu();
    }
 }
 
@@ -154,13 +154,13 @@ static void priv_edges_ptcolrs(
    int n_vertices = 0;
 
    if (eflag == PEDGE_VISIBILITY) {
-      glBegin(GL_LINES);
+      wsgl_begin_emu(GL_LINES);
       for (i = 0; i < edata->num_edges - 1; i++) {
          if (edata->edgedata.edges[i] == PEDGE_ON) {
-            glVertex3f(ptcolrs[i].point.x,
+            wsgl_vertex3f_emu(ptcolrs[i].point.x,
                        ptcolrs[i].point.y,
                        ptcolrs[i].point.z);
-            glVertex3f(ptcolrs[i + 1].point.x,
+            wsgl_vertex3f_emu(ptcolrs[i + 1].point.x,
                        ptcolrs[i + 1].point.y,
                        ptcolrs[i + 1].point.z);
             if (record_geom){
@@ -177,10 +177,10 @@ static void priv_edges_ptcolrs(
       }
       if (edata->num_edges < num_vertices) {
          if (edata->edgedata.edges[i] == PEDGE_ON) {
-            glVertex3f(ptcolrs[i].point.x,
+            wsgl_vertex3f_emu(ptcolrs[i].point.x,
                        ptcolrs[i].point.y,
                        ptcolrs[i].point.z);
-            glVertex3f(ptcolrs[i + 1].point.x,
+            wsgl_vertex3f_emu(ptcolrs[i + 1].point.x,
                        ptcolrs[i + 1].point.y,
                        ptcolrs[i + 1].point.z);
             if (record_geom){
@@ -197,10 +197,10 @@ static void priv_edges_ptcolrs(
       }
       else {
          if (edata->edgedata.edges[i] == PEDGE_ON) {
-            glVertex3f(ptcolrs[i].point.x,
+            wsgl_vertex3f_emu(ptcolrs[i].point.x,
                        ptcolrs[i].point.y,
                        ptcolrs[i].point.z);
-            glVertex3f(ptcolrs[0].point.x,
+            wsgl_vertex3f_emu(ptcolrs[0].point.x,
                        ptcolrs[0].point.y,
                        ptcolrs[0].point.z);
             if (record_geom){
@@ -218,12 +218,12 @@ static void priv_edges_ptcolrs(
       if (record_geom){
         wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
       }
-      glEnd();
+      wsgl_end_emu();
    }
    else {
-      glBegin(GL_LINE_LOOP);
+      wsgl_begin_emu(GL_LINE_LOOP);
       for (i = 0; i < num_vertices; i++) {
-         glVertex3f(ptcolrs[i].point.x,
+         wsgl_vertex3f_emu(ptcolrs[i].point.x,
                     ptcolrs[i].point.y,
                     ptcolrs[i].point.z);
          if (record_geom){
@@ -236,7 +236,7 @@ static void priv_edges_ptcolrs(
       if (record_geom){
         wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
       }
-      glEnd();
+      wsgl_end_emu();
    }
 }
 
@@ -259,13 +259,13 @@ static void priv_edges_ptnorms(
    int n_vertices = 0;
 
    if (eflag == PEDGE_VISIBILITY) {
-      glBegin(GL_LINES);
+      wsgl_begin_emu(GL_LINES);
       for (i = 0; i < edata->num_edges - 1; i++) {
          if (edata->edgedata.edges[i] == PEDGE_ON) {
-            glVertex3f(ptnorms[i].point.x,
+            wsgl_vertex3f_emu(ptnorms[i].point.x,
                        ptnorms[i].point.y,
                        ptnorms[i].point.z);
-            glVertex3f(ptnorms[i + 1].point.x,
+            wsgl_vertex3f_emu(ptnorms[i + 1].point.x,
                        ptnorms[i + 1].point.y,
                        ptnorms[i + 1].point.z);
             if (record_geom){
@@ -282,10 +282,10 @@ static void priv_edges_ptnorms(
       }
       if (edata->num_edges < num_vertices) {
          if (edata->edgedata.edges[i] == PEDGE_ON) {
-            glVertex3f(ptnorms[i].point.x,
+            wsgl_vertex3f_emu(ptnorms[i].point.x,
                        ptnorms[i].point.y,
                        ptnorms[i].point.z);
-            glVertex3f(ptnorms[i + 1].point.x,
+            wsgl_vertex3f_emu(ptnorms[i + 1].point.x,
                        ptnorms[i + 1].point.y,
                        ptnorms[i + 1].point.z);
             if (record_geom){
@@ -302,10 +302,10 @@ static void priv_edges_ptnorms(
       }
       else {
          if (edata->edgedata.edges[i] == PEDGE_ON) {
-            glVertex3f(ptnorms[i].point.x,
+            wsgl_vertex3f_emu(ptnorms[i].point.x,
                        ptnorms[i].point.y,
                        ptnorms[i].point.z);
-            glVertex3f(ptnorms[0].point.x,
+            wsgl_vertex3f_emu(ptnorms[0].point.x,
                        ptnorms[0].point.y,
                        ptnorms[0].point.z);
             if (record_geom){
@@ -323,12 +323,12 @@ static void priv_edges_ptnorms(
       if (record_geom){
         wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
       }
-      glEnd();
+      wsgl_end_emu();
    }
    else {
-      glBegin(GL_LINE_LOOP);
+      wsgl_begin_emu(GL_LINE_LOOP);
       for (i = 0; i < num_vertices; i++) {
-        glVertex3f(ptnorms[i].point.x,
+        wsgl_vertex3f_emu(ptnorms[i].point.x,
                    ptnorms[i].point.y,
                    ptnorms[i].point.z);
         if (record_geom){
@@ -341,7 +341,7 @@ static void priv_edges_ptnorms(
       if (record_geom){
         wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
       }
-      glEnd();
+      wsgl_end_emu();
    }
 }
 
@@ -364,13 +364,13 @@ static void priv_edges_ptconorms(
    int n_vertices = 0;
 
    if (eflag == PEDGE_VISIBILITY) {
-      glBegin(GL_LINES);
+      wsgl_begin_emu(GL_LINES);
       for (i = 0; i < edata->num_edges - 1; i++) {
          if (edata->edgedata.edges[i] == PEDGE_ON) {
-            glVertex3f(ptconorms[i].point.x,
+            wsgl_vertex3f_emu(ptconorms[i].point.x,
                        ptconorms[i].point.y,
                        ptconorms[i].point.z);
-            glVertex3f(ptconorms[i + 1].point.x,
+            wsgl_vertex3f_emu(ptconorms[i + 1].point.x,
                        ptconorms[i + 1].point.y,
                        ptconorms[i + 1].point.z);
             if (record_geom){
@@ -387,10 +387,10 @@ static void priv_edges_ptconorms(
       }
       if (edata->num_edges < num_vertices) {
          if (edata->edgedata.edges[i] == PEDGE_ON) {
-            glVertex3f(ptconorms[i].point.x,
+            wsgl_vertex3f_emu(ptconorms[i].point.x,
                        ptconorms[i].point.y,
                        ptconorms[i].point.z);
-            glVertex3f(ptconorms[i + 1].point.x,
+            wsgl_vertex3f_emu(ptconorms[i + 1].point.x,
                        ptconorms[i + 1].point.y,
                        ptconorms[i + 1].point.z);
             if (record_geom){
@@ -407,10 +407,10 @@ static void priv_edges_ptconorms(
       }
       else {
          if (edata->edgedata.edges[i] == PEDGE_ON) {
-            glVertex3f(ptconorms[i].point.x,
+            wsgl_vertex3f_emu(ptconorms[i].point.x,
                        ptconorms[i].point.y,
                        ptconorms[i].point.z);
-            glVertex3f(ptconorms[0].point.x,
+            wsgl_vertex3f_emu(ptconorms[0].point.x,
                        ptconorms[0].point.y,
                        ptconorms[0].point.z);
             if (record_geom){
@@ -428,12 +428,12 @@ static void priv_edges_ptconorms(
       if (record_geom){
         wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
       }
-      glEnd();
+      wsgl_end_emu();
    }
    else {
-      glBegin(GL_LINE_LOOP);
+      wsgl_begin_emu(GL_LINE_LOOP);
       for (i = 0; i < num_vertices; i++) {
-         glVertex3f(ptconorms[i].point.x,
+         wsgl_vertex3f_emu(ptconorms[i].point.x,
                     ptconorms[i].point.y,
                     ptconorms[i].point.z);
          if (record_geom){
@@ -446,7 +446,7 @@ static void priv_edges_ptconorms(
       if (record_geom){
         wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
       }
-      glEnd();
+      wsgl_end_emu();
    }
 }
 

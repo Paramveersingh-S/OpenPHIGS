@@ -43,21 +43,15 @@ void priv_edge_area(
   int vertex_indices[MAX_VERTICES];
   int n_vertices = 0;
 
-  glBegin(GL_LINE_LOOP);
-  for (i = 0; i < point_list->num_points; i++) {
-    glVertex2f(point_list->points[i].x,
-               point_list->points[i].y);
-    if (record_geom){
-      vertex_indices[n_vertices] = wsgl_add_vertex(point_list->points[i].x,
-                                                   point_list->points[i].y,
-                                                   0.);
-      n_vertices ++;
+  if (point_list->num_points > 0) {
+    if (record_geom) {
+      for (i = 0; i < point_list->num_points; i++) {
+        vertex_indices[n_vertices++] = wsgl_add_vertex(point_list->points[i].x, point_list->points[i].y, 0.);
+      }
+      wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
     }
+    wsgl_draw_vbo(GL_LINE_LOOP, 2, point_list->num_points, (const float *)point_list->points);
   }
-  if (record_geom){
-    wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
-  }
-  glEnd();
 }
 
 /*******************************************************************************
@@ -75,22 +69,15 @@ void priv_edge_area3(
   int vertex_indices[MAX_VERTICES];
   int n_vertices = 0;
 
-  glBegin(GL_LINE_LOOP);
-  for (i = 0; i < point_list->num_points; i++) {
-    glVertex3f(point_list->points[i].x,
-               point_list->points[i].y,
-               point_list->points[i].z);
-    if (record_geom){
-      vertex_indices[n_vertices] = wsgl_add_vertex(point_list->points[i].x,
-                                                   point_list->points[i].y,
-                                                   point_list->points[i].z);
-      n_vertices ++;
+  if (point_list->num_points > 0) {
+    if (record_geom) {
+      for (i = 0; i < point_list->num_points; i++) {
+        vertex_indices[n_vertices++] = wsgl_add_vertex(point_list->points[i].x, point_list->points[i].y, point_list->points[i].z);
+      }
+      wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
     }
+    wsgl_draw_vbo(GL_LINE_LOOP, 3, point_list->num_points, (const float *)point_list->points);
   }
-  if (record_geom){
-    wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
-  }
-  glEnd();
 }
 
 /*******************************************************************************

@@ -189,6 +189,13 @@ extern "C" {
    */
 
   void wsgl_export_obj(const char* filename, const char* title);
+  void wsgl_export_gltf(const char* filename, const char* title);
+  void wsgl_draw_vbo(unsigned int mode, int dimensions, int count, const float *positions);
+  void wsgl_begin_emu(unsigned int mode);
+  void wsgl_vertex2f_emu(float x, float y);
+  void wsgl_vertex3f_emu(float x, float y, float z);
+  void wsgl_vertex3dv_emu(const double *v);
+  void wsgl_end_emu(void);
   /*******************************************************************************
    * wsgl_clear_geometry()
    *

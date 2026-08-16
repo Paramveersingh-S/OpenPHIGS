@@ -52,16 +52,17 @@ static void wsgl_marker_line_loop(
   glLineWidth(1.0);
   glDisable(GL_LINE_STIPPLE);
   dalpha = 2.0*PI/(float)n;
-  glBegin(GL_LINE_LOOP);
   for (i = 0; i < point_list->num_points; i++) {
+    float *buffer = (float *)malloc(n * 2 * sizeof(float));
     alpha = dalpha/2.0;
     for (j = 0; j < n; j++){
-      glVertex2f(point_list->points[i].x + scale*cos(alpha),
-		 point_list->points[i].y + scale*sin(alpha));
+      buffer[j*2] = point_list->points[i].x + scale*cos(alpha);
+      buffer[j*2+1] = point_list->points[i].y + scale*sin(alpha);
       alpha += dalpha;
     }
+    wsgl_draw_vbo(GL_LINE_LOOP, 2, n, buffer);
+    free(buffer);
   }
-  glEnd();
 }
 
 /*******************************************************************************
@@ -83,18 +84,21 @@ static void wsgl_marker_plus(
 
    glLineWidth(1.0);
    glDisable(GL_LINE_STIPPLE);
-   glBegin(GL_LINES);
+   int count = point_list->num_points * 4;
+   float *buffer = (float *)malloc(count * 2 * sizeof(float));
+   int idx = 0;
    for (i = 0; i < point_list->num_points; i++) {
-      glVertex2f(point_list->points[i].x - half_scale,
-                 point_list->points[i].y);
-      glVertex2f(point_list->points[i].x + half_scale,
-                 point_list->points[i].y);
-      glVertex2f(point_list->points[i].x,
-                 point_list->points[i].y - half_scale);
-      glVertex2f(point_list->points[i].x,
-                 point_list->points[i].y + half_scale);
+      buffer[idx++] = point_list->points[i].x - half_scale;
+      buffer[idx++] = point_list->points[i].y;
+      buffer[idx++] = point_list->points[i].x + half_scale;
+      buffer[idx++] = point_list->points[i].y;
+      buffer[idx++] = point_list->points[i].x;
+      buffer[idx++] = point_list->points[i].y - half_scale;
+      buffer[idx++] = point_list->points[i].x;
+      buffer[idx++] = point_list->points[i].y + half_scale;
    }
-   glEnd();
+   wsgl_draw_vbo(GL_LINES, 2, count, buffer);
+   free(buffer);
 }
 
 /*******************************************************************************
@@ -117,27 +121,30 @@ static void wsgl_marker_asterisk(
 
    glLineWidth(1.0);
    glDisable(GL_LINE_STIPPLE);
-   glBegin(GL_LINES);
+   int count = point_list->num_points * 8;
+   float *buffer = (float *)malloc(count * 2 * sizeof(float));
+   int idx = 0;
    for (i = 0; i < point_list->num_points; i++) {
-      glVertex2f(point_list->points[i].x - half_scale,
-                 point_list->points[i].y);
-      glVertex2f(point_list->points[i].x + half_scale,
-                 point_list->points[i].y);
-      glVertex2f(point_list->points[i].x,
-                 point_list->points[i].y - half_scale);
-      glVertex2f(point_list->points[i].x,
-                 point_list->points[i].y + half_scale);
+      buffer[idx++] = point_list->points[i].x - half_scale;
+      buffer[idx++] = point_list->points[i].y;
+      buffer[idx++] = point_list->points[i].x + half_scale;
+      buffer[idx++] = point_list->points[i].y;
+      buffer[idx++] = point_list->points[i].x;
+      buffer[idx++] = point_list->points[i].y - half_scale;
+      buffer[idx++] = point_list->points[i].x;
+      buffer[idx++] = point_list->points[i].y + half_scale;
 
-      glVertex2f(point_list->points[i].x - small_scale,
-                 point_list->points[i].y + small_scale);
-      glVertex2f(point_list->points[i].x + small_scale,
-                 point_list->points[i].y - small_scale);
-      glVertex2f(point_list->points[i].x - small_scale,
-                 point_list->points[i].y - small_scale);
-      glVertex2f(point_list->points[i].x + small_scale,
-                 point_list->points[i].y + small_scale);
+      buffer[idx++] = point_list->points[i].x - small_scale;
+      buffer[idx++] = point_list->points[i].y + small_scale;
+      buffer[idx++] = point_list->points[i].x + small_scale;
+      buffer[idx++] = point_list->points[i].y - small_scale;
+      buffer[idx++] = point_list->points[i].x - small_scale;
+      buffer[idx++] = point_list->points[i].y - small_scale;
+      buffer[idx++] = point_list->points[i].x + small_scale;
+      buffer[idx++] = point_list->points[i].y + small_scale;
    }
-   glEnd();
+   wsgl_draw_vbo(GL_LINES, 2, count, buffer);
+   free(buffer);
 }
 
 /*******************************************************************************
@@ -159,18 +166,21 @@ static void wsgl_marker_cross(
 
    glLineWidth(1.0);
    glDisable(GL_LINE_STIPPLE);
-   glBegin(GL_LINES);
+   int count = point_list->num_points * 4;
+   float *buffer = (float *)malloc(count * 2 * sizeof(float));
+   int idx = 0;
    for (i = 0; i < point_list->num_points; i++) {
-      glVertex2f(point_list->points[i].x - half_scale,
-                 point_list->points[i].y + half_scale);
-      glVertex2f(point_list->points[i].x + half_scale,
-                 point_list->points[i].y - half_scale);
-      glVertex2f(point_list->points[i].x - half_scale,
-                 point_list->points[i].y - half_scale);
-      glVertex2f(point_list->points[i].x + half_scale,
-                 point_list->points[i].y + half_scale);
+      buffer[idx++] = point_list->points[i].x - half_scale;
+      buffer[idx++] = point_list->points[i].y + half_scale;
+      buffer[idx++] = point_list->points[i].x + half_scale;
+      buffer[idx++] = point_list->points[i].y - half_scale;
+      buffer[idx++] = point_list->points[i].x - half_scale;
+      buffer[idx++] = point_list->points[i].y - half_scale;
+      buffer[idx++] = point_list->points[i].x + half_scale;
+      buffer[idx++] = point_list->points[i].y + half_scale;
    }
-   glEnd();
+   wsgl_draw_vbo(GL_LINES, 2, count, buffer);
+   free(buffer);
 }
 
 /*******************************************************************************
@@ -191,16 +201,17 @@ static void wsgl_marker_polygon(
    glLineWidth(1.0);
    glDisable(GL_LINE_STIPPLE);
    dalpha = 2.0*PI/(float)n;
-   glBegin(GL_TRIANGLE_FAN);
    for (i = 0; i < point_list->num_points; i++) {
+     float *buffer = (float *)malloc(n * 2 * sizeof(float));
      alpha = dalpha/2.0;
      for (j = 0; j < n; j++){
-       glVertex2f(point_list->points[i].x + scale*cos(alpha),
-		  point_list->points[i].y + scale*sin(alpha));
+       buffer[j*2] = point_list->points[i].x + scale*cos(alpha);
+       buffer[j*2+1] = point_list->points[i].y + scale*sin(alpha);
        alpha += dalpha;
      }
+     wsgl_draw_vbo(GL_TRIANGLE_FAN, 2, n, buffer);
+     free(buffer);
    }
-   glEnd();
 }
 
 /*******************************************************************************

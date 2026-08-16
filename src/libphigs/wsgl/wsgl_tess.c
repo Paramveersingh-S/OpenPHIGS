@@ -39,11 +39,11 @@
 #endif
 
 static void CALLBACK tessBeginCB(GLenum which) {
-    glBegin(which);
+    wsgl_begin_emu(which);
 }
 
 static void CALLBACK tessEndCB() {
-    glEnd();
+    wsgl_end_emu();
 }
 
 static void CALLBACK tessEdgeFlagCB(GLboolean flag) {
@@ -59,7 +59,7 @@ static void CALLBACK tessVertexCB(void *data) {
     if (v->apply_cb) {
         v->apply_cb(v);
     }
-    glVertex3dv(v->pos);
+    wsgl_vertex3dv_emu(v->pos);
 }
 
 static void CALLBACK tessCombineCB(GLdouble coords[3], 

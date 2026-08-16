@@ -49,7 +49,7 @@ void wsgl_text_vertex3tcs(
   point3.y = y;
   point3.z = z;
   phg_tranpt3(&point3, tcs2wc, &pwc);
-  glVertex3f(pwc.x, pwc.y, pwc.z);
+  wsgl_vertex3f_emu(pwc.x, pwc.y, pwc.z);
   *pwcb = pwc;
 }
 
@@ -446,9 +446,9 @@ static void wsgl_text_string(
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-        glBegin(GL_LINE_STRIP);
+        wsgl_begin_emu(GL_LINE_STRIP);
         for(z = 0; z < spath->num_points; z++) {
-          glVertex2f(pos.x + spath->points[z].x * char_ht * char_expan,
+          wsgl_vertex2f_emu(pos.x + spath->points[z].x * char_ht * char_expan,
                      pos.y + spath->points[z].y * char_ht);
           if (record_geom){
             vertex_indices[n_vertices] = wsgl_add_vertex(pos.x + spath->points[z].x * char_ht * char_expan,
@@ -460,7 +460,7 @@ static void wsgl_text_string(
         if (record_geom){
           wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
         }
-        glEnd();
+        wsgl_end_emu();
       }
     }
     pos.x += ch->right * char_ht * char_expan;
@@ -519,7 +519,7 @@ static void wsgl_text_string3(
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-        glBegin(GL_LINE_STRIP);
+        wsgl_begin_emu(GL_LINE_STRIP);
         for(z = 0; z < spath->num_points; z++) {
           wsgl_text_vertex3tcs(tmatrix,
                                pos.x + spath->points[z].x * char_ht * char_expan,
@@ -533,7 +533,7 @@ static void wsgl_text_string3(
         if (record_geom){
           wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
         }
-        glEnd();
+        wsgl_end_emu();
       }
     }
     pos.x += ch->right * char_ht * char_expan;
@@ -593,7 +593,7 @@ static void wsgl_anno_text_string3(
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-        glBegin(GL_LINE_STRIP);
+        wsgl_begin_emu(GL_LINE_STRIP);
         for(z = 0; z < spath->num_points; z++) {
           wsgl_text_vertex3tcs(vrc2wc,
                                pos.x + spath->points[z].x * char_ht * char_expan,
@@ -607,7 +607,7 @@ static void wsgl_anno_text_string3(
         if (record_geom){
           wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
         }
-        glEnd();
+        wsgl_end_emu();
       }
     }
     pos.x += ch->right * char_ht * char_expan;
@@ -667,9 +667,9 @@ static void wsgl_text_char(
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-        glBegin(GL_LINE_STRIP);
+        wsgl_begin_emu(GL_LINE_STRIP);
         for(z = 0; z < spath->num_points; z++) {
-          glVertex2f(pos.x + spath->points[z].x * char_ht * char_expan,
+          wsgl_vertex2f_emu(pos.x + spath->points[z].x * char_ht * char_expan,
                      pos.y + spath->points[z].y * char_ht);
           if (record_geom){
             vertex_indices[n_vertices] = wsgl_add_vertex(pos.x + spath->points[z].x * char_ht * char_expan,
@@ -680,7 +680,7 @@ static void wsgl_text_char(
         if (record_geom){
           wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
         }
-        glEnd();
+        wsgl_end_emu();
       }
     }
 
@@ -762,7 +762,7 @@ static void wsgl_text_char3(
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-        glBegin(GL_LINE_STRIP);
+        wsgl_begin_emu(GL_LINE_STRIP);
         for(z = 0; z < spath->num_points; z++) {
           wsgl_text_vertex3tcs(
                                tmatrix,
@@ -777,7 +777,7 @@ static void wsgl_text_char3(
         if (record_geom){
           wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
         }
-        glEnd();
+        wsgl_end_emu();
       }
     }
 
@@ -859,7 +859,7 @@ static void wsgl_anno_text_char3(
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-        glBegin(GL_LINE_STRIP);
+        wsgl_begin_emu(GL_LINE_STRIP);
         for(z = 0; z < spath->num_points; z++) {
           wsgl_text_vertex3tcs(
                                vrc2wc,
@@ -874,7 +874,7 @@ static void wsgl_anno_text_char3(
         if (record_geom){
           wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
         }
-        glEnd();
+        wsgl_end_emu();
       }
     }
 
@@ -956,13 +956,13 @@ static void wsgl_text_stroke(
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-        glBegin(GL_LINE_STRIP);
+        wsgl_begin_emu(GL_LINE_STRIP);
         for(z = 0; z < spath->num_points; z++) {
           pt.x = spath->points[z].x * right.delta_x +
             spath->points[z].y * right.delta_y;
           pt.y = spath->points[z].x * up->delta_x +
             spath->points[z].y * up->delta_y;
-          glVertex2f(pos.x + pt.x * char_ht * char_expan,
+          wsgl_vertex2f_emu(pos.x + pt.x * char_ht * char_expan,
                      pos.y + pt.y * char_ht);
           if (record_geom){
             vertex_indices[n_vertices] = wsgl_add_vertex(pos.x + pt.x * char_ht * char_expan,
@@ -973,7 +973,7 @@ static void wsgl_text_stroke(
         if (record_geom){
           wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
         }
-        glEnd();
+        wsgl_end_emu();
       }
     }
 
@@ -1071,7 +1071,7 @@ static void wsgl_text_stroke3(
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-        glBegin(GL_LINE_STRIP);
+        wsgl_begin_emu(GL_LINE_STRIP);
         for(z = 0; z < spath->num_points; z++) {
           pt.x = spath->points[z].x * right.delta_x +
             spath->points[z].y * right.delta_y;
@@ -1089,7 +1089,7 @@ static void wsgl_text_stroke3(
         if (record_geom){
           wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
         }
-        glEnd();
+        wsgl_end_emu();
       }
     }
 
@@ -1186,7 +1186,7 @@ static void wsgl_anno_text_stroke3(
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-        glBegin(GL_LINE_STRIP);
+        wsgl_begin_emu(GL_LINE_STRIP);
         for(z = 0; z < spath->num_points; z++) {
           pt.x = spath->points[z].x * right.delta_x +
             spath->points[z].y * right.delta_y;
@@ -1204,7 +1204,7 @@ static void wsgl_anno_text_stroke3(
         if (record_geom){
           wsgl_add_geometry(GEOM_LINE, vertex_indices, NULL, n_vertices);
         }
-        glEnd();
+        wsgl_end_emu();
       }
     }
 
